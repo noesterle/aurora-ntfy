@@ -25,7 +25,7 @@ def noaa_kp_json_1m():
     return kps[-1]['kp_index']
 
 
-def noaa_kp_json_forecast():
+def noaa_kp_json_forecast(local_timezone):
     DATETIME = 0
     KP = 1
     OBSERVED = 2
@@ -39,7 +39,7 @@ def noaa_kp_json_forecast():
     kp_forecast = r.json()
     
     dt_now = datetime.now()
-    dt_now = dt_now.replace(tzinfo=ZoneInfo('America/New_York'))
+    dt_now = dt_now.replace(tzinfo=ZoneInfo(local_timezone))
     dt_evening = dt_now.replace(hour=16, minute=59, second=00, microsecond=00)
     td = timedelta(hours=15)
     dt_next_morning = dt_evening + td
@@ -73,11 +73,12 @@ def send_message(ntfy_url, ntfy_priority, kp_1m, kp_3hr, highest_forecast_kp, av
 if __name__ == "__main__":
     config = load_config('./config.json')
     target_kp = config['target_kp']
+    local_timezone = config['local_timezone']
     ntfy_url = config['ntfy_url']
     ntfy_priority = config['ntfy_priority']
 
     kp_3hr = noaa_kp_json_3hr()
     kp_1m = noaa_kp_json_1m()
-    avg_forecast_kp, highest_forecast_kp = noaa_kp_json_forecast()
+    avg_forecast_kp, highest_forecast_kp = noaa_kp_json_forecast(local_timezone)
     if float(kp_3hr) > target_kp or float(kp_1m) > target_kp or avg_forecast_kp > target_kp or highest_forecast_kp > target_kp: # or True:
         send_message(ntfy_url, ntfy_priority, kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp, target_kp)
