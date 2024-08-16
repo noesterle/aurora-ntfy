@@ -1,5 +1,6 @@
 {
     "ntfy_url": "https://ntfy.sh/aurora",
+    "ntfy_priority": 3,
     "target_kp": 4.0
 }
 

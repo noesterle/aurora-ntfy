@@ -59,11 +59,12 @@ def noaa_kp_json_forecast():
     return avg_kp, highest_kp
 
 
-def send_message(ntfy_url, kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp, target_kp):
+def send_message(ntfy_url, ntfy_priority, kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp, target_kp):
     headers = {
         'Title': ('KP Above Target: %s' % (target_kp)),
         'Click': "https://www.swpc.noaa.gov/communities/aurora-dashboard-experimental#",
         'Attach': 'https://services.swpc.noaa.gov/experimental/images/aurora_dashboard/tonights_static_viewline_forecast.png',
+        'Priority': str(ntfy_priority),
     }
     data = ('KP 1m: %s\nKP 3hr %s\nHighest Night KP: %s\nAvg Night KP: %s' % (kp_1m,  kp_3hr, highest_forecast_kp, avg_forecast_kp)).encode(encoding='utf-8')
     r = requests.post(ntfy_url, data=data, headers=headers)
@@ -73,9 +74,10 @@ if __name__ == "__main__":
     config = load_config('./config.json')
     target_kp = config['target_kp']
     ntfy_url = config['ntfy_url']
+    ntfy_priority = config['ntfy_priority']
 
     kp_3hr = noaa_kp_json_3hr()
     kp_1m = noaa_kp_json_1m()
     avg_forecast_kp, highest_forecast_kp = noaa_kp_json_forecast()
     if float(kp_3hr) > target_kp or float(kp_1m) > target_kp or avg_forecast_kp > target_kp or highest_forecast_kp > target_kp: # or True:
-        send_message(ntfy_url, kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp, target_kp)
+        send_message(ntfy_url, ntfy_priority, kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp, target_kp)
