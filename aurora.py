@@ -60,13 +60,15 @@ def noaa_kp_json_forecast(local_timezone):
 
 
 def send_message(ntfy_url, ntfy_priority, kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp, target_kp):
+    date_time_utc = datetime.now(timezone.utc)
     headers = {
         'Title': ('KP Above Target: %s' % (target_kp)),
         'Click': "https://www.swpc.noaa.gov/communities/aurora-dashboard-experimental#",
         'Attach': 'https://services.swpc.noaa.gov/experimental/images/aurora_dashboard/tonights_static_viewline_forecast.png',
         'Priority': str(ntfy_priority),
     }
-    data = ('KP 1m: %s\nKP 3hr %s\nHighest Night KP: %s\nAvg Night KP: %s' % (kp_1m,  kp_3hr, highest_forecast_kp, avg_forecast_kp)).encode(encoding='utf-8')
+    data = ('Time: %s UTC\nKP 1m: %s\nKP 3hr %s\nHighest Night KP: %s\nAvg Night KP: %s' % 
+            (date_time_utc.strftime("%Y-%m-%d %H:%M:%S"), kp_1m, kp_3hr, highest_forecast_kp, avg_forecast_kp)).encode(encoding='utf-8')
     r = requests.post(ntfy_url, data=data, headers=headers)
 
 
