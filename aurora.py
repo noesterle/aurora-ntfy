@@ -93,7 +93,7 @@ def convert_coordinates(latitude, longitude):
 
 def find_local_forecast(latitude, longitude, forecast_list):
     converted_latitude, converted_longitude = convert_coordinates(latitude, longitude)
-    forecast_aurora = 0
+    forecast_aurora = -1
     local_found = False
     for forecast in forecast_list:
         forecast_long = forecast[0]
