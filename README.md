@@ -27,3 +27,4 @@ The configured `long` valid values are -180 to 360.
 NOAA data uses 0E to 360E longitude values, this script does a best-effort to convert `lat` and `long` to equivalent NOAA longitudes.
 Any coodinates that are not found are printed to console with the configured and converted values, and a negative value will be used in the notifications "Local 30 min Chance:" value.
 
+Latitude and Longitude values can be converted and displayed at [the NGS Coordinate Conversion and Transformation Tool (NCAT)](https://www.ngs.noaa.gov/NCAT/).
