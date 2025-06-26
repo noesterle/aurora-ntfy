@@ -125,6 +125,7 @@ def find_highest_forecast(forecast_list):
 
 def get_30min_forecast(latitude, longitude):
     forecast_url = "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json"
+    image_url = "https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg"
     r = requests.get(forecast_url)
     response_json = r.json()
     obs_time = response_json['Observation Time']
