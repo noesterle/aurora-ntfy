@@ -10,7 +10,7 @@ Clicking the notification will open NOAA's Aurora Dashboard in a web browser.
 
 ## Installation and Updating
 
-Aurora-ntfy requires Python 3.10 to be installed.
+Aurora-ntfy requires Python 3.11 to be installed.
 
 This project uses [Pipenv](https://pipenv.pypa.io/en/latest/) to manage dependencies.
 To install Pipenv using Pip, run `pip install --user pipenv`.
@@ -53,7 +53,7 @@ This project is open to contributions, ideas in Issues, bugfixes or suggested ne
 
 ### Python
 
-This is currently developed using Python 3.10.
+This is currently developed using Python 3.11.
 To change the Python version used, run `pipenv --rm` to remove the relevant virtual environment, then change the python version in Pipfile, run `pipenv install`, and run the script as described in the "Running" section.
 
 ### Testing
