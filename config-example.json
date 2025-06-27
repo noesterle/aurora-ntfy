@@ -2,5 +2,8 @@
     "ntfy_url": "https://ntfy.sh/aurora",
     "ntfy_priority": 3,
     "local_timezone": "America/New_York",
-    "target_kp": 4.0
+    "target_kp": 4.0,
+    "lat": 41,
+    "long": -74,
+    "thirty_min_forcast_min": 1
 }
