@@ -14,7 +14,7 @@ def noaa_kp_json_3hr():
     kp_data_url = 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json'
     r = requests.get(kp_data_url)
     kps = r.json()
-    return kps[-1][1]
+    return kps[-1]['Kp']
 
 
 def noaa_kp_json_1m():
@@ -25,7 +25,6 @@ def noaa_kp_json_1m():
 
 
 def noaa_kp_json_forecast(local_timezone):
-    DATETIME = 0
     KP = 1
     OBSERVED = 2
     NOAA_SCALE = 3
@@ -44,11 +43,9 @@ def noaa_kp_json_forecast(local_timezone):
     dt_next_morning = dt_evening + td
 
     for data in kp_forecast:
-        if data[DATETIME] == 'time_tag':
-            continue
-        dt_forecast = datetime.strptime(data[DATETIME],'%Y-%m-%d %H:%M:%S')
+        dt_forecast = datetime.strptime(data['time_tag'],'%Y-%m-%dT%H:%M:%S')
         dt_forecast = dt_forecast.replace(tzinfo=timezone.utc)
-        kp_forecasted = float(data[KP])
+        kp_forecasted = float(data['kp'])
         if dt_evening <= dt_forecast and dt_forecast <= dt_next_morning:
             highest_kp = kp_forecasted if kp_forecasted > highest_kp else highest_kp
             kps_to_avg.append(kp_forecasted)
